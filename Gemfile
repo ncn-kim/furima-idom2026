@@ -67,3 +67,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
+
+#deviseのインストール
+gem 'devise'
