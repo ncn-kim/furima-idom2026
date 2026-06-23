@@ -15,16 +15,17 @@
 
 ## items テーブル
 
-| Column          | Type    | Options     |
-| --------------- | ------- | ----------- |
-| name            | string  | null: false |
-| detail          | text    | null: false |
-| price           | integer | null: false |
-| status_id       | integer | null: false |
-| category_id     | integer | null: false |
-| shipping_fee_id | integer | null: false |
-| prefecture_id   | integer | null: false |
-| schedule_id     | integer | null: false |
+| Column          | Type       | Options                        |
+| --------------- | ---------- | ------------------------------ |
+| name            | string     | null: false                    |
+| detail          | text       | null: false                    |
+| price           | integer    | null: false                    |
+| status_id       | integer    | null: false                    |
+| category_id     | integer    | null: false                    |
+| shipping_fee_id | integer    | null: false                    |
+| prefecture_id   | integer    | null: false                    |
+| schedule_id     | integer    | null: false                    |
+| user            | references | null: false, foreign_key: true |
 
 ## comments テーブル
 
@@ -36,11 +37,10 @@
 
 ## orders テーブル
 
-| Column        | Type       | Options                        |
-| ------------- | ---------- | ------------------------------ |
-| user          | references | null: false, foreign_key: true |
-| item          | references | null: false, foreign_key: true |
-| prefecture_id | integer    | null: false                    |
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
+| item   | references | null: false, foreign_key: true |
 
 ## delivery_addresses テーブル
 
@@ -52,6 +52,7 @@
 | building      | string     |                                |
 | phone_number  | string     | null: false                    |
 | order         | references | null: false, foreign_key: true |
+| prefecture_id | integer    | null: false                    |
 
 ## Active_Hash使用　テーブル
 
