@@ -41,12 +41,14 @@
 }
 
 
-.indispensable{
-  background:#ea352d;
-  color:white;
-  font-size:12px;
-  margin-left:8px;
-  padding:2px 4px;
+.indispensable {
+  background: #ea352d;
+  margin-left: 8px;
+  padding: 3px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .form-text-wrap {

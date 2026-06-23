@@ -22,9 +22,5 @@ class User < ApplicationRecord
 
   validates :birth_date, presence: true
 
-  validates :password,
-            format: {
-              with: PASSWORD_REGEX,
-              message: 'は半角英数字混合で入力してください'
-            }
+  validates :password, presence: true
 end
