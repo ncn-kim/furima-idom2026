@@ -1,13 +1,29 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  #バリデーション(仮)
+
+  PASSWORD_REGEX = /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]+\z/
+  NAME_REGEX = /\A[ぁ-んァ-ヶ一-龥々ー]+\z/
+  KANA_REGEX = /\A[ァ-ヶー]+\z/
+
   validates :nickname, presence: true
-  validates :last_name, presence: true
-  validates :first_name, presence: true
-  validates :last_name_kana, presence: true
-  validates :first_name_kana, presence: true
+  validates :last_name, presence: true,
+                        format: { with: NAME_REGEX }
+
+  validates :first_name, presence: true,
+                         format: { with: NAME_REGEX }
+
+  validates :last_name_kana, presence: true,
+                             format: { with: KANA_REGEX }
+
+  validates :first_name_kana, presence: true,
+                              format: { with: KANA_REGEX }
+
   validates :birth_date, presence: true
+
+  validates :password,
+            format: {
+              with: PASSWORD_REGEX,
+              message: 'は半角英数字混合で入力してください'
+            }
 end
