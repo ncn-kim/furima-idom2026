@@ -15,13 +15,17 @@
 
 ## items テーブル
 
-| Column    | Type       | Options                        |
-| -------   | ---------- | ------------------------------ |
-| name      | string     | null: false                    |
-| detail    | text       | null: false                    |
-| price     | integer    | null: false                    |
-| status_id | integer    | null: false                    |
-| user_id   | references | null: false, foreign_key: true |
+| Column          | Type       | Options                        |
+| --------------- | ---------- | ------------------------------ |
+| name            | string     | null: false                    |
+| detail          | text       | null: false                    |
+| price           | integer    | null: false                    |
+| status          | integer    | null: false                    |
+| category_id     | references | null: false, foreign_key: true |
+| sales_status_id | references | null: false, foreign_key: true |
+| shipping_fee_id | references | null: false, foreign_key: true |
+| prefecture_id   | references | null: false, foreign_key: true |
+| schedule_id     | references | null: false, foreign_key: true |
 
 ## comments テーブル
 
@@ -40,14 +44,15 @@
 
 ## delivery_addresses テーブル
 
-| Column       | Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| postal_code  | string     | null: false                    |
-| city         | string     | null: false                    |
-| address      | string     | null: false                    |
-| building     | string     |                                |
-| phone_number | string     | null: false                    |
-| order_id     | references | null: false, foreign_key: true |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| postal_code   | string     | null: false                    |
+| city          | string     | null: false                    |
+| address       | string     | null: false                    |
+| building      | string     |                                |
+| phone_number  | string     | null: false                    |
+| order_id      | references | null: false, foreign_key: true |
+| prefecture_id | references | null: false, foreign_key: true |
 
 ## Active_Hash使用　テーブル
 
@@ -57,7 +62,7 @@
 | ------ | ------ | ----------- |
 | name   | string | null: false |
 
-### Status　テーブル
+### Sales_status　テーブル
 
 | Column | Type   | Options     |
 | ------ | ------ | ----------- |
@@ -65,15 +70,15 @@
 
 ### Shipping_fee　テーブル
 
-| Column | Type    | Options     |
-| ------ | ------- | ----------- |
-| fee    | integer | null: false |
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
 
 ### Schedule　テーブル
 
-| Column   | Type | Options     |
-| -------- | ---- | ----------- |
-| date     | date | null: false |
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
 
 ### prefecture　テーブル
 
