@@ -15,13 +15,13 @@
 
 ## items テーブル
 
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| name    | string     | null: false                    |
-| detail  | text       | null: false                    |
-| price   | integer    | null: false                    |
-| status  | integer    | null: false                    |
-| user_id | references | null: false, foreign_key: true |
+| Column    | Type       | Options                        |
+| -------   | ---------- | ------------------------------ |
+| name      | string     | null: false                    |
+| detail    | text       | null: false                    |
+| price     | integer    | null: false                    |
+| status_id | integer    | null: false                    |
+| user_id   | references | null: false, foreign_key: true |
 
 ## comments テーブル
 
@@ -74,12 +74,6 @@
 | Column   | Type | Options     |
 | -------- | ---- | ----------- |
 | date     | date | null: false |
-
-### Item_prefecture　テーブル
-
-| Column | Type   | Options     |
-| ------ | ------ | ----------- |
-| name   | string | null: false |
 
 ### prefecture　テーブル
 
