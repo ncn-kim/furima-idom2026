@@ -15,32 +15,32 @@
 
 ## items テーブル
 
-| Column          | Type       | Options                        |
-| --------------- | ---------- | ------------------------------ |
-| name            | string     | null: false                    |
-| detail          | text       | null: false                    |
-| price           | integer    | null: false                    |
-| status          | integer    | null: false                    |
-| category_id     | references | null: false, foreign_key: true |
-| sales_status_id | references | null: false, foreign_key: true |
-| shipping_fee_id | references | null: false, foreign_key: true |
-| prefecture_id   | references | null: false, foreign_key: true |
-| schedule_id     | references | null: false, foreign_key: true |
+| Column          | Type    | Options     |
+| --------------- | ------- | ----------- |
+| name            | string  | null: false |
+| detail          | text    | null: false |
+| price           | integer | null: false |
+| status_id       | integer | null: false |
+| category_id     | integer | null: false |
+| shipping_fee_id | integer | null: false |
+| prefecture_id   | integer | null: false |
+| schedule_id     | integer | null: false |
 
 ## comments テーブル
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
 | content | text       | null: false                    |
-| user_id | references | null: false, foreign_key: true |
-| item_id | references | null: false, foreign_key: true |
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true |
 
 ## orders テーブル
 
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| user_id | references | null: false, foreign_key: true |
-| item_id | references | null: false, foreign_key: true |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| user          | references | null: false, foreign_key: true |
+| item          | references | null: false, foreign_key: true |
+| prefecture_id | integer    | null: false                    |
 
 ## delivery_addresses テーブル
 
@@ -51,8 +51,7 @@
 | address       | string     | null: false                    |
 | building      | string     |                                |
 | phone_number  | string     | null: false                    |
-| order_id      | references | null: false, foreign_key: true |
-| prefecture_id | references | null: false, foreign_key: true |
+| order         | references | null: false, foreign_key: true |
 
 ## Active_Hash使用　テーブル
 
@@ -62,7 +61,7 @@
 | ------ | ------ | ----------- |
 | name   | string | null: false |
 
-### Sales_status　テーブル
+### Status　テーブル
 
 | Column | Type   | Options     |
 | ------ | ------ | ----------- |
