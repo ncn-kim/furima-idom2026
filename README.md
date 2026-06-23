@@ -1,24 +1,88 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column          | Type   | Options                   |
+| --------------- | ------ | ------------------------- |
+| nickname        | string | null: false               |
+| email           | string | null: false, unique: true |
+| password        | string | null: false               |
+| last_name       | string | null: false               |
+| first_name      | string | null: false               |
+| last_name_kana  | string | null: false               |
+| first_name_kana | string | null: false               |
+| birth_date      | date   | null: false               |
 
-* Ruby version
+## items テーブル
 
-* System dependencies
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| name    | string     | null: false                    |
+| detail  | text       | null: false                    |
+| price   | integer    | null: false                    |
+| status  | integer    | null: false                    |
+| user_id | references | null: false, foreign_key: true |
 
-* Configuration
+## comments テーブル
 
-* Database creation
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| content | text       | null: false                    |
+| user_id | references | null: false, foreign_key: true |
+| item_id | references | null: false, foreign_key: true |
 
-* Database initialization
+## orders テーブル
 
-* How to run the test suite
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| user_id | references | null: false, foreign_key: true |
+| item_id | references | null: false, foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
+## delivery_addresses テーブル
 
-* Deployment instructions
+| Column       | Type       | Options                        |
+| ------------ | ---------- | ------------------------------ |
+| postal_code  | string     | null: false                    |
+| city         | string     | null: false                    |
+| address      | string     | null: false                    |
+| building     | string     |                                |
+| phone_number | string     | null: false                    |
+| order_id     | references | null: false, foreign_key: true |
 
-* ...
+## Active_Hash使用　テーブル
+
+### Category　テーブル
+
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
+
+### Status　テーブル
+
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
+
+### Shipping_fee　テーブル
+
+| Column | Type    | Options     |
+| ------ | ------- | ----------- |
+| fee    | integer | null: false |
+
+### Schedule　テーブル
+
+| Column   | Type | Options     |
+| -------- | ---- | ----------- |
+| date     | date | null: false |
+
+### Item_prefecture　テーブル
+
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
+
+### prefecture　テーブル
+
+| Column | Type   | Options     |
+| ------ | ------ | ----------- |
+| name   | string | null: false |
