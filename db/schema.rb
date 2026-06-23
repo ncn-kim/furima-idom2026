@@ -15,7 +15,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_23_021020) do
     t.string "name", null: false
     t.text "detail", null: false
     t.integer "price", null: false
-    t.integer "status", default: 1, null: false
     t.integer "category_id", null: false
     t.integer "sales_status_id", null: false
     t.integer "shipping_fee_id", null: false
