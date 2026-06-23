@@ -8,7 +8,9 @@ class Item < ApplicationRecord
   has_one_attached :image
 
   # active_hash外のカラムバリデーション
-  validates :name, :detail, :price, :image, presence: true
+  validates :name, :detail, :image, presence: true
+  validates :price, presence: true,
+                    numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
   # active_hash発カラムバリデーション("---"保存不可設定)
   validates :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id, :schedule_id,
             numericality: { other_than: 1, message: "can't be blank" }
