@@ -50,7 +50,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_020110) do
     t.integer "schedule_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-ActiveRecord::Schema[7.1].define(version: 2026_06_22_065634) do
+  end
+
+  create_table "orders", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_orders_on_item_id"
+  end
+
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -67,13 +75,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_22_065634) do
     t.date "birth_date"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "orders", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "item_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_orders_on_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
