@@ -18,7 +18,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Name can't be blank")
       end
       it 'nameが41文字以上では保存できない' do
-        @item.name = Faker::Lorem.characters(min_length: 41, max_length: 100)
+        @item.name = Faker::Lorem.characters(number: 41)
         @item.valid?
         expect(@item.errors.full_messages).to include('Name is too long (maximum is 40 characters)')
       end
@@ -28,7 +28,7 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Detail can't be blank")
       end
       it 'detailが1001文字以上では保存できない' do
-        @item.name = Faker::Lorem.characters(min_length: 1001, max_length: 1200)
+        @item.detail = Faker::Lorem.characters(number: 1001)
         @item.valid?
         expect(@item.errors.full_messages).to include('Detail is too long (maximum is 1000 characters)')
       end
@@ -60,28 +60,28 @@ RSpec.describe Item, type: :model do
       it 'sales_status_idが1（初期値：---）の場合は登録できない' do
         @item.sales_status_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Sales status must be other than 1')
+        expect(@item.errors.full_messages).to include('Sales status must be selected')
       end
 
       it 'category_idが1（初期値：---）の場合は登録できない' do
         @item.category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Category must be other than 1')
+        expect(@item.errors.full_messages).to include('Category must be selected')
       end
       it 'shipping_fee_idが1（初期値：---）の場合は登録できない' do
         @item.shipping_fee_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Shipping fee must be other than 1')
+        expect(@item.errors.full_messages).to include('Shipping fee must be selected')
       end
       it 'prefecture_idが1（初期値：---）の場合は登録できない' do
         @item.prefecture_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Prefecture must be other than 1')
+        expect(@item.errors.full_messages).to include('Prefecture must be selected')
       end
       it 'schedule_idが1（初期値：---）の場合は登録できない' do
         @item.schedule_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include('Schedule must be other than 1')
+        expect(@item.errors.full_messages).to include('Schedule must be selected')
       end
       it 'userが紐付いていないと保存できない' do
         @item.user = nil

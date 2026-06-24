@@ -342,12 +342,10 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-  factory_bot_rails
-  faker
-  image_processing (~> 1.2)
   devise
   factory_bot_rails
   faker
+  image_processing (~> 1.2)
   importmap-rails
   jbuilder
   mini_magick
