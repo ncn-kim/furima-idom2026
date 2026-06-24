@@ -22,6 +22,6 @@ class User < ApplicationRecord
 
   validates :birth_date, presence: true
 
-  validates :password,presence: true,
-                              format: { with: PASSWORD_REGEX }
+  validates :password,
+                       format: { with: PASSWORD_REGEX }
 end
