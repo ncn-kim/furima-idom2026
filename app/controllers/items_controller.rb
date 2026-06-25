@@ -2,8 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
   def show
     @item = Item.find(params[:id])
-    @comment = Comment.new
-    @comments = @item.comments.includes(:user)
+    # @comment = Comment.new
+    # @comments = @item.comments.includes(:user)
   end
 
   def new

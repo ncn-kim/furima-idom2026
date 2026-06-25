@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   belongs_to :schedule
 
   belongs_to :user
-  has_many :comments
+  # has_many :comments
   has_one :order
 
   has_one_attached :image
