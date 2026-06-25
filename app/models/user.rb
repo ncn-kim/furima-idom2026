@@ -2,7 +2,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  #正規表現
+  # 正規表現
   PASSWORD_REGEX = /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]+\z/
   NAME_REGEX = /\A[ぁ-んァ-ヶ一-龥々ー]+\z/
   KANA_REGEX = /\A[ァ-ヶー]+\z/
@@ -23,5 +23,5 @@ class User < ApplicationRecord
   validates :birth_date, presence: true
 
   validates :password,
-                       format: { with: PASSWORD_REGEX }
+            format: { with: PASSWORD_REGEX }
 end
