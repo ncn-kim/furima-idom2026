@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   # ログアウト時はログインページに
-  before_action :authenticate_user!, only: [:edit, :update]
+  before_action :authenticate_user!, except: [:index]
   # ログイン中でも、売却済み+自身の商品以外ならトップページ
   before_action :authorize_edit!, only: [:edit, :update]
 
@@ -13,13 +13,15 @@ class ItemsController < ApplicationController
     # パラメーターから商品情報取得
     @item = Item.find(params[:id])
 
-    if @item.update(item_params)
+    if @item.update(update_item_params)
       # 更新できたら詳細ページに遷移
       redirect_to item_path(@item)
     else
       # 失敗したら
-      render :edit
-  before_action :authenticate_user!, only: [:new, :create]
+      render :edit, status: :unprocessable_content
+    end
+  end
+
   def new
     @item = Item.new
   end
@@ -35,7 +37,12 @@ class ItemsController < ApplicationController
 
   private
 
-  def item_params
+def item_params
+    params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
+                                 :schedule_id).merge(user_id: current_user.id)
+  end
+
+  def update_item_params
     params.require(:item).permit(:name, :detail, :price, :sales_status_id, :category_id, :shipping_fee_id, :prefecture_id,
                                  :schedule_id)
   end
@@ -49,7 +56,6 @@ class ItemsController < ApplicationController
 
     # 他人の商品ならトップページ
     redirect_to root_path unless @item.user_id == current_user.id
-    params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
-                                 :schedule_id).merge(user_id: current_user.id)
   end
+
 end
