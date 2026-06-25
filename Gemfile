@@ -76,3 +76,7 @@ gem 'image_processing', '~> 1.2'
 
 #deviseのインストール
 gem 'devise'
+
+group :production do
+  gem 'pg'
+end

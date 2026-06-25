@@ -20,6 +20,10 @@ class ItemsController < ApplicationController
       # 失敗したら
       render :edit, status: :unprocessable_content
     end
+
+
+  def index
+    @items = Item.includes(:user).order(created_at: :desc)
   end
 
   def new
