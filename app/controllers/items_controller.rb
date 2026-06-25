@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     # 売却済みならトップページ
-    redirect_to root_path if @item.sold_out?
+    redirect_to root_path if item.order.present?
 
     # 他人の商品ならトップページ
     redirect_to root_path unless @item.user_id == current_user.id
