@@ -1,5 +1,9 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+  def show
+    @item = Item.find(params[:id])
+    # @comment = Comment.new
+    # @comments = @item.comments.includes(:user)
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
