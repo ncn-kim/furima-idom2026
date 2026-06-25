@@ -20,11 +20,13 @@ class ItemsController < ApplicationController
       # 失敗したら
       render :edit, status: :unprocessable_content
     end
+  end
 
   def show
     @item = Item.find(params[:id])
     # @comment = Comment.new
     # @comments = @item.comments.includes(:user)
+  end
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
@@ -45,7 +47,7 @@ class ItemsController < ApplicationController
 
   private
 
-def item_params
+  def item_params
     params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
                                  :schedule_id).merge(user_id: current_user.id)
   end
@@ -65,5 +67,4 @@ def item_params
     # 他人の商品ならトップページ
     redirect_to root_path unless @item.user_id == current_user.id
   end
-
 end
