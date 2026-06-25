@@ -19,6 +19,17 @@ class ItemsController < ApplicationController
     else
       # 失敗したら
       render :edit
+  before_action :authenticate_user!, only: [:new, :create]
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -38,5 +49,7 @@ class ItemsController < ApplicationController
 
     # 他人の商品ならトップページ
     redirect_to root_path unless @item.user_id == current_user.id
+    params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
+                                 :schedule_id).merge(user_id: current_user.id)
   end
 end

@@ -40,6 +40,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_020110) do
   end
 
   create_table "items", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "name", null: false
     t.text "detail", null: false
     t.integer "price", null: false
