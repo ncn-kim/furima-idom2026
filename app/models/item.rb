@@ -7,8 +7,8 @@ class Item < ApplicationRecord
   belongs_to :schedule
 
   belongs_to :user
-  # has_many :comments
-  # has_one :order
+  has_many :comments
+  has_one :order
 
   has_one_attached :image
 
@@ -22,4 +22,3 @@ class Item < ApplicationRecord
   validates :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id, :schedule_id,
             numericality: { other_than: 1, message: 'must be selected' }
 end
- 
