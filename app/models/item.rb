@@ -5,13 +5,13 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee
   belongs_to :prefecture
   belongs_to :schedule
- 
+
   belongs_to :user
-  has_many :comments
-  has_one :order
- 
+  # has_many :comments
+  # has_one :order
+
   has_one_attached :image
- 
+
   # active_hash外のカラムバリデーション
   validates :name, presence: true, length: { maximum: 40 }
   validates :detail, presence: true, length: { maximum: 1000 }
