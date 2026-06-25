@@ -1,7 +1,6 @@
 class CreateItems < ActiveRecord::Migration[7.1]
   def change
     create_table :items do |t|
-      # ユーザー管理機能待ち
       t.references :user,       null:false, foreign_key: true
       t.string :name, null: false
       t.text :detail, null: false
