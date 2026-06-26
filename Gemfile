@@ -77,6 +77,7 @@ gem 'image_processing', '~> 1.2'
 #deviseのインストール
 gem 'devise'
 
+gem 'payjp'
 group :production do
   gem 'pg'
 end

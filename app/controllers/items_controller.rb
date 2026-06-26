@@ -1,33 +1,9 @@
 class ItemsController < ApplicationController
-  # ログイン有無確認
   before_action :authenticate_user!, except: [:index]
-  # 商品情報取得
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
-  # ログイン中でも、売却済み+自身の商品以外ならトップページ
-  before_action :authorize_edit!, only: [:edit, :update]
-  # destroy実行前に自分の商品か確認
-  before_action :authorize_destroy!, only: [:destroy]
-
-
-  def destroy
-    @item.destroy
-    redirect_to root_path
-  end
-
-  def edit
-  end
-
-  def update
-    if @item.update(item_params)
-      # 更新できたら詳細ページに遷移
-      redirect_to item_path(@item)
-    else
-      # 失敗したら
-      render :edit, status: :unprocessable_content
-    end
-  end
-
+  before_action :set_item, except: [:index, :new, :create]
+  before_action :move_to_index, only: [:edit, :update]
   def show
+    @item = Item.find(params[:id])
     # @comment = Comment.new
     # @comments = @item.comments.includes(:user)
   end
@@ -49,26 +25,27 @@ class ItemsController < ApplicationController
     end
   end
 
-  private
-
-  def set_item
-    @item = Item.find(params[:id])
+  def edit
   end
+
+  def update
+  end
+
+  def destroy
+  end
+
+  private
 
   def item_params
     params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
                                  :schedule_id).merge(user_id: current_user.id)
   end
 
-  def authorize_edit!
-    # 売却済みならトップページ
-    redirect_to root_path if @item.order.present?
-    # 他人の商品ならトップページ
-    redirect_to root_path unless @item.user_id == current_user.id
+  def set_item
+    @item = Item.find(params[:id])
   end
 
-  def authorize_destroy!
-    # 自分の商品でない場合トップページに
-    redirect_to root_path unless @item.owned_by?(current_user)
+  def move_to_index
+    redirect_to root_path unless current_user == @item.user && @item.order.blank?
   end
 end
