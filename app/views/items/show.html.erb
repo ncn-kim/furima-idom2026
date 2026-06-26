@@ -23,7 +23,7 @@
       </span>
     </div>
     <%# ログインしているユーザーと出品しているユーザーが、同一人物か確認 %>
-    <% if user_signed_in? && current_user.id == @item.user_id %>
+    <% if user_signed_in? && current_user.id == @item.user_id && @item.order.nil? %>
       <%= link_to "商品の編集", edit_item_path(@item.id), class: "item-red-btn" %>
       <p class="or-text">or</p>
       <%= link_to "削除", item_path(@item), data: { turbo_method: :delete }, class:"item-destroy" %>

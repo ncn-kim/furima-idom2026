@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :move_to_index, only: [:edit, :update]
   # ログイン有無確認
   before_action :authenticate_user!, except: [:index, :show]
   # 商品情報取得
@@ -28,6 +29,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find(params[:id])
     # @comment = Comment.new
     # @comments = @item.comments.includes(:user)
   end
@@ -51,24 +53,16 @@ class ItemsController < ApplicationController
 
   private
 
-  def set_item
-    @item = Item.find(params[:id])
-  end
-
   def item_params
     params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
                                  :schedule_id).merge(user_id: current_user.id)
   end
 
-  def authorize_edit!
-    # 売却済みならトップページ
-    redirect_to root_path if @item.order.present?
-    # 他人の商品ならトップページ
-    redirect_to root_path unless @item.user_id == current_user.id
+  def set_item
+    @item = Item.find(params[:id])
   end
 
-  def authorize_destroy!
-    # 自分の商品でない場合トップページに
-    redirect_to root_path unless @item.owned_by?(current_user)
+  def move_to_index
+    redirect_to root_path unless current_user == @item.user && @item.order.blank?
   end
 end
