@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-  before_action :move_to_index, only: [:edit, :update]
   # ログイン有無確認
   before_action :authenticate_user!, except: [:index, :show]
   # 商品情報取得
@@ -8,7 +7,6 @@ class ItemsController < ApplicationController
   before_action :authorize_edit!, only: [:edit, :update]
   # destroy実行前に自分の商品か確認
   before_action :authorize_destroy!, only: [:destroy]
-
 
   def destroy
     @item.destroy
@@ -62,7 +60,19 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def move_to_index
-    redirect_to root_path unless current_user == @item.user && @item.order.blank?
+  def authorize_edit!
+    # パラメーターから商品情報取得
+    @item = Item.find(params[:id])
+
+    # 売却済みならトップページ
+    redirect_to root_path if @item.order.present?
+
+    # 他人の商品ならトップページ
+    redirect_to root_path unless @item.user_id == current_user.id
+  end
+
+  def authorize_destroy!
+    # 自分の商品でない場合トップページに
+    redirect_to root_path unless @item.owned_by?(current_user)
   end
 end
