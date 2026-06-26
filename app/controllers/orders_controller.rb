@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @order_delivery_address = OrderDeliveryAddress.new
+    @total_price = @item.price + usage_fee
   end
 
   def create
@@ -12,10 +13,11 @@ class OrdersController < ApplicationController
 
     @order_delivery_address = OrderDeliveryAddress.new(order_params)
 
+    @total_price = @item.price + usage_fee
     if @order_delivery_address.valid?
       Payjp.api_key = ENV['TEST_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
-        amount: @item.price, # 商品の値段
+        amount: @total_price, # 商品の値段
         card: @order_delivery_address.token, # カードトークン
         currency: 'jpy' # 通貨の種類（日本円）
       )
@@ -40,5 +42,15 @@ class OrdersController < ApplicationController
 
   def move_to_index
     redirect_to root_path if current_user.id == @item.user_id || @item.order.present?
+  end
+
+  def usage_fee
+    usage_fee = if @item.price >= 10_000
+                  @item.price * 0.05 + 100
+                elsif @item.price < 10_000 && @item.price >= 3000
+                  @item.price * 0.035
+                else
+                  50
+                end
   end
 end
