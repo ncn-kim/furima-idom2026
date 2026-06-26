@@ -1,11 +1,10 @@
 class ItemsController < ApplicationController
-  #ログイン有無確認
+  # ログイン有無確認
   before_action :authenticate_user!, except: [:index]
-  #destroy実行前に自分の商品か確認
+  # destroy実行前に自分の商品か確認
   before_action :authorize_destroy!, only: [:destroy]
   # ログイン中でも、売却済み+自身の商品以外ならトップページ
   before_action :authorize_edit!, only: [:edit, :update]
-
 
   def destroy
     @item = Item.find(params[:id])
@@ -77,10 +76,9 @@ class ItemsController < ApplicationController
     redirect_to root_path unless @item.user_id == current_user.id
   end
 
-    def authorize_destroy!
+  def authorize_destroy!
     @item = Item.find(params[:id])
-    #自分の商品でない場合トップページに
+    # 自分の商品でない場合トップページに
     redirect_to root_path unless @item.owned_by?(current_user)
   end
-
 end
