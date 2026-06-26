@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   # ログイン有無確認
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   # 商品情報取得
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   # ログイン中でも、売却済み+自身の商品以外ならトップページ
