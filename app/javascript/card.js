@@ -1,16 +1,35 @@
-window.addEventListener("turbo:load", function () {
-  const item_price = document.getElementById("item-price");
+const pay = () => {
+  const testOpenKey = document.querySelector(
+    'meta[name="test_open_key"]',
+  ).content;
 
-  item_price.addEventListener("input", function () {
-    const tax_price = document.getElementById("add-tax-price");
-    const profit = document.getElementById("profit");
-    // 入力された販売価格を値として受け取る
-    const price = Number(item_price.value);
-    // 販売金額の10％カツ小数点切り捨ての為、Math.floor
-    const selling_tax = Math.floor(price * 0.1);
-    const earn_price = price - selling_tax;
+  const payjp = Payjp(testOpenKey);
+  const elements = payjp.elements();
+  const numberElement = elements.create("cardNumber");
+  const expiryElement = elements.create("cardExpiry");
+  const cvcElement = elements.create("cardCvc");
 
-    tax_price.textContent = selling_tax;
-    profit.textContent = earn_price;
+  numberElement.mount("#number-form");
+  expiryElement.mount("#expiry-form");
+  cvcElement.mount("#cvc-form");
+
+  const form = document.getElementById("charge-form");
+  form.addEventListener("submit", (e) => {
+    payjp.createToken(numberElement).then(function (response) {
+      if (response.error) {
+      } else {
+        const token = response.id;
+        const renderDom = document.getElementById("charge-form");
+        const tokenObj = `<input value=${token} name='token' type="hidden">`;
+        renderDom.insertAdjacentHTML("beforeend", tokenObj);
+      }
+      numberElement.clear();
+      expiryElement.clear();
+      cvcElement.clear();
+      document.getElementById("charge-form").submit();
+    });
+    e.preventDefault();
   });
-});
+};
+
+window.addEventListener("turbo:load", pay);
