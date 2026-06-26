@@ -61,8 +61,6 @@ class ItemsController < ApplicationController
   end
 
   def authorize_edit!
-    # パラメーターから商品情報取得
-    @item = Item.find(params[:id])
     # 売却済みならトップページ
     redirect_to root_path if @item.order.present?
     # 他人の商品ならトップページ
@@ -70,7 +68,6 @@ class ItemsController < ApplicationController
   end
 
   def authorize_destroy!
-    @item = Item.find(params[:id])
     # 自分の商品でない場合トップページに
     redirect_to root_path unless @item.owned_by?(current_user)
   end
