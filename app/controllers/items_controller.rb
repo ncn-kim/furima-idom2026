@@ -1,7 +1,33 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
-  before_action :set_item, except: [:index, :new, :create]
   before_action :move_to_index, only: [:edit, :update]
+  # ログイン有無確認
+  before_action :authenticate_user!, except: [:index, :show]
+  # 商品情報取得
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  # ログイン中でも、売却済み+自身の商品以外ならトップページ
+  before_action :authorize_edit!, only: [:edit, :update]
+  # destroy実行前に自分の商品か確認
+  before_action :authorize_destroy!, only: [:destroy]
+
+
+  def destroy
+    @item.destroy
+    redirect_to root_path
+  end
+
+  def edit
+  end
+
+  def update
+    if @item.update(item_params)
+      # 更新できたら詳細ページに遷移
+      redirect_to item_path(@item)
+    else
+      # 失敗したら
+      render :edit, status: :unprocessable_content
+    end
+  end
+
   def show
     @item = Item.find(params[:id])
     # @comment = Comment.new
@@ -23,15 +49,6 @@ class ItemsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   private
