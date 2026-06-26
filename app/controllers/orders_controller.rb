@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @order_delivery_address = OrderDeliveryAddress.new
-    @total_price = @item.price + usage_fee
+    @total_price = (@item.price + usage_fee).to_i
   end
 
   def create
@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
 
     @order_delivery_address = OrderDeliveryAddress.new(order_params)
 
-    @total_price = @item.price + usage_fee
+    @total_price = (@item.price + usage_fee).to_i
     if @order_delivery_address.valid?
       Payjp.api_key = ENV['TEST_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
