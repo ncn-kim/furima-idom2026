@@ -36,7 +36,7 @@ class OrdersController < ApplicationController
   end
 
   def total_price
-    @total_price = (@item.price + usage_fee).to_i
+    @total_price = (@item.price + usage_fee).ceil
   end
 
   def order_params
