@@ -11,7 +11,18 @@ class OrdersController < ApplicationController
     total_price
     @order_delivery_address = OrderDeliveryAddress.new(order_params)
     # 支払い設定が多少長い為、privateで定義
-    payment
+    if @order_delivery_address.valid?
+      Payjp.api_key = ENV['TEST_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      Payjp::Charge.create(
+        amount: @total_price, # 商品の値段
+        card: @order_delivery_address.token, # カードトークン
+        currency: 'jpy' # 通貨の種類（日本円）
+      )
+      @order_delivery_address.save
+      redirect_to root_path
+    else
+      render :index, status: :unprocessable_entity
+    end
   end
 
   private
@@ -41,21 +52,6 @@ class OrdersController < ApplicationController
       @item.price * 0.035
     else
       50
-    end
-  end
-
-  def payment
-    if @order_delivery_address.valid?
-      Payjp.api_key = ENV['TEST_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
-      Payjp::Charge.create(
-        amount: @total_price, # 商品の値段
-        card: @order_delivery_address.token, # カードトークン
-        currency: 'jpy' # 通貨の種類（日本円）
-      )
-      @order_delivery_address.save
-      redirect_to root_path
-    else
-      render :index, status: :unprocessable_entity
     end
   end
 end
