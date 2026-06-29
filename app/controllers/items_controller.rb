@@ -34,6 +34,10 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
+    @categories = Category.all
+    return unless params[:category_id].present?
+
+    @items = @items.where(category_id: params[:category_id])
   end
 
   def new
