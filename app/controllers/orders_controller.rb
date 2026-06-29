@@ -35,13 +35,13 @@ class OrdersController < ApplicationController
   end
 
   def usage_fee
-    usage_fee = if @item.price >= 10_000
-                  @item.price * 0.05 + 100
-                elsif @item.price < 10_000 && @item.price >= 3000
-                  @item.price * 0.035
-                else
-                  50
-                end
+    if @item.price >= 10_000
+      @item.price * 0.05 + 100
+    elsif @item.price < 10_000 && @item.price >= 3000
+      @item.price * 0.035
+    else
+      50
+    end
   end
 
   def payment
