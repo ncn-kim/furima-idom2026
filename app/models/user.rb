@@ -26,4 +26,5 @@ class User < ApplicationRecord
             format: { with: PASSWORD_REGEX }
   has_many :items
   has_many :orders
+  has_many :view_counts
 end

@@ -5,10 +5,12 @@ class Item < ApplicationRecord
   belongs_to :shipping_fee
   belongs_to :prefecture
   belongs_to :schedule
+  belongs_to :brand
 
   belongs_to :user
   # has_many :comments
   has_one :order, dependent: :destroy
+  has_many :view_counts, dependent: :destroy
 
   has_one_attached :image
 
@@ -19,6 +21,7 @@ class Item < ApplicationRecord
   validates :price, presence: true,
                     numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_523_713 }
   # active_hash発カラムバリデーション("---"保存不可設定)
+  validates :brand_id, presence: true
   validates :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id, :schedule_id,
             numericality: { other_than: 1, message: 'must be selected' }
 end

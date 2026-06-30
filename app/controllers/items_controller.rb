@@ -28,14 +28,17 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+
+    current_user.view_counts.create(item_id: @item.id)
+
     # @comment = Comment.new
     # @comments = @item.comments.includes(:user)
   end
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
-    @categories = Category.all
-    return unless params[:category_id].present?
+    @categories = Category.where.not(id: 1)
+    @brands = Brand.where.not(id: 1)
 
     @items = @items.where(category_id: params[:category_id])
   end

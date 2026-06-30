@@ -10,10 +10,30 @@
     </form>
   </div>
   <div class='nav'>
-    <ul class='lists-left'>
-      <li><%= link_to 'カテゴリー', "#", class: "category-list" %></li>
-      <li><%= link_to 'ブランド', "#", class: "brand-list" %></li>
-    </ul>
+    <div class='lists-left'>
+      <div class="lists-left-btns">
+        <div class="all-item-nav-btn", id="all-item-nav-btn">
+          <%= link_to "すべて", items_path %></div>
+        <div class="category-nav-btn", id="category-nav-btn">カテゴリー</div>
+        <div class="brand-nav-btn" , id="brand-nav-btn">ブランド</div>
+      </div>
+      <div class="lists-left-list">
+        <div class="category-nav-list" ,id="category-nav-list">
+          <% @categories.each do |c|%>
+            <div>
+              <%= link_to c.name, items_path(category_id: c.id) %>
+            </div>
+          <%end%>
+        </div>
+        <div class="brand-nav-list" ,id="brand-nav-list">
+          <% @brands.each do |b|%>
+            <div>
+              <%= link_to b.name, items_path(brand_id: b.id) %>
+            </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
     <ul class='lists-right'>
       <% if user_signed_in? %>
         <li>
