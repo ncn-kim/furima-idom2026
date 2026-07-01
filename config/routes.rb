@@ -5,5 +5,5 @@ Rails.application.routes.draw do
       resources :orders, only: [:index, :create]
       resources :comments, only: :create
   end
-  resources :groups, only: :index
+  resources :categories, only: [:index, :show]
 end

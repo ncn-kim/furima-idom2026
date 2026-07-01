@@ -26,6 +26,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_groups
-    @groups = Group.all
+    @categories = Category.all
   end
 end

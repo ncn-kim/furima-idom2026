@@ -14,8 +14,8 @@
       <li class="dropdown">
         <span class="category-list">カテゴリー</span>
         <ul class="dropdown-menu">
-          <% @groups.each do |group| %>
-            <li><%= link_to group.name, groups_path(category: group.id), class: "category-list"%></li>
+          <% @categories.each do |category| %>
+            <li><%= link_to category.name, category_path(category), class: "category-list"%></li>
           <% end %>
         </ul>
       </li>
