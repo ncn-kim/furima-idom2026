@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_24_052016) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_30_051540) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -62,6 +62,14 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_052016) do
     t.index ["order_id"], name: "index_delivery_addresses_on_order_id"
   end
 
+  create_table "groups", charset: "utf8mb3", force: :cascade do |t|
+    t.string "title", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_groups_on_item_id"
+  end
+
   create_table "items", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
@@ -109,6 +117,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_24_052016) do
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
   add_foreign_key "delivery_addresses", "orders"
+  add_foreign_key "groups", "items"
   add_foreign_key "items", "users"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
