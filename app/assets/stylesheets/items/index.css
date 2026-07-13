@@ -217,18 +217,23 @@ a {
 .item-contents {
   background-color: #fff;
   display: flex;
-  flex-direction: column;
   align-items: center;
   padding: 10vh 0;
 }
 
-.item-contents > .title {
+.item-index-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-index-contents > .title {
   font-size: 5vh;
   line-height: 1.4;
   font-weight: bold;
 }
 
-.item-contents > .subtitle {
+.item-index-contents > .subtitle {
   font-size: 3vh;
   margin: 1vh 0;
   text-decoration: none;
@@ -237,7 +242,7 @@ a {
 }
 
 .item-lists {
-  width: 100vw;
+  width: calc(100vw - 200px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -304,4 +309,54 @@ a {
   font-size: 2vh;
 }
 
+.category-contents {
+  width: auto;
+  position: sticky;
+  white-space: nowrap;
+  margin-left: 30px;
+}
+
+.category-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.category-btn {
+  width: auto;
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #e8e8e8;
+  /* --button_outline_color: #000000; */
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-btn a {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+.item-main-contents {
+  display: flex;
+}
+
+.count-print {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
 /* //商品一覧 */
