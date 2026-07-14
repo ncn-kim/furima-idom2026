@@ -388,15 +388,16 @@ a {
   display: inline-block;
   text-decoration: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-radius: 4px;
   color: black;
-  margin-left: 10px;
 }
 
 .filter-select {
   height: 100%;
+  width: 250px;
   text-align-last: center;
+  margin-right: 5px;
 }
 
 .famous-items {
