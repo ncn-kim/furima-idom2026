@@ -29,16 +29,33 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
     ViewCount.create(item_id: @item.id, user_id: current_user&.id)
   end
 
   def index
-    @items = Item.includes(:user).order(created_at: :desc)
-    return unless params[:category_id].present?
+    @items = Item.includes(:user)
 
-    @category = Category.find(params[:category_id])
-    @items = @items.where(category_id: params[:category_id])
+    if params[:category_id].present?
+      @category = Category.find(params[:category_id])
+      @items = @items.where(category_id: params[:category_id])
+    end
+
+    @items = case params[:sort]
+             when 'view_count_desc'
+               @items.left_joins(:view_counts)
+                     .group(:id)
+                     .order('COUNT(view_counts.id) DESC')
+             when 'view_count_asc'
+               @items.left_joins(:view_counts)
+                     .group(:id)
+                     .order('COUNT(view_counts.id) ASC')
+             when 'price_desc'
+               @items.order(price: :desc)
+             when 'price_asc'
+               @items.order(price: :asc)
+             else
+               @items.order(created_at: :desc)
+             end
   end
 
   def new

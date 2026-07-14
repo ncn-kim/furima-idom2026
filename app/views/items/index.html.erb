@@ -20,6 +20,16 @@
       <div class="subtitle" >
         新規投稿商品
       </div>
+      <%= form_with url: items_path, method: :get, local: true do |f|%>
+        <%= hidden_field_tag :category_id, params[:category_id] %>
+        <%= f.select :sort, [
+          ['---', ''],
+          ['回覧数高い順', 'view_count_desc'],
+          ['回覧数低い順', 'view_count_asc'],
+          ['値段高い順', 'price_desc'],
+          ['値段低い順', 'price_asc']
+        ], { selected: params[:sort] }, { onchange: 'this.form.submit();', style: "text-align:-webkit-center;"}%>
+      <% end %>
       <div class="item-main-contents">
         <ul class='item-lists'>
           <% @items.each do |item|%>
