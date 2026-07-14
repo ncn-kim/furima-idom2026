@@ -242,7 +242,7 @@ a {
 }
 
 .item-lists {
-  width: calc(100vw - 200px);
+  width: 100vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -380,4 +380,31 @@ a {
   align-items: flex-end;
 }
 
+.item-filter {
+  display: flex;
+}
+
+.clear-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  margin-left: 10px;
+}
+
+.filter-select {
+  height: 100%;
+  text-align-last: center;
+}
+
+.famous-items {
+  text-align: center;
+  font-size: 36px;
+}
+
+.famous-items > span {
+  color: red;
+}
 /* //商品一覧 */

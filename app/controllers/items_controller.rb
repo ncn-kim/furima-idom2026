@@ -35,6 +35,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.includes(:user)
     filter_by_category
+    filter_by_brand
     filter_by_status
     sort_items
   end
@@ -65,7 +66,7 @@ class ItemsController < ApplicationController
 
   def shared_header
     @categories = Category.where.not(id: 1)
-    @brands = Brand.where.not(id: 1)
+    @brands = Brand.all
   end
 
   def authorize_edit!
@@ -89,6 +90,13 @@ class ItemsController < ApplicationController
 
     @category = Category.find(params[:category_id])
     @items = @items.where(category_id: params[:category_id])
+  end
+
+  def filter_by_brand
+    return unless params[:brand_id].present?
+
+    @brand = Brand.find(params[:brand_id])
+    @items = @items.where(brand_id: params[:brand_id])
   end
 
   def filter_by_status

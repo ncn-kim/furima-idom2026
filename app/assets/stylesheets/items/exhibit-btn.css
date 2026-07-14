@@ -6,6 +6,7 @@
   bottom: 32px;
   right: 32px;
   position: fixed;
+  z-index: 999;
   padding: 15px;
 }
 

@@ -9,6 +9,12 @@ class TopController < ApplicationController
   private
 
   def ranking
-    @all_ranks = Item.joins(:view_counts).group(:item_id).order('count(item_id) desc').limit(5)
+    @all_ranks = Item
+                 .left_joins(:order)
+                 .joins(:view_counts)
+                 .where(orders: { id: nil })
+                 .group(:id)
+                 .order('COUNT(view_counts.id) DESC')
+                 .limit(5)
   end
 end
