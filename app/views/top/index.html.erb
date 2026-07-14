@@ -107,6 +107,31 @@
       </li>
     </ul>
   </div>
+  <div class="item-main-contents">
+    <ul class='top-item-lists'>
+      <% @all_ranks.each.with_index(1) do |item, rank|%>
+        <li class='list'>
+          <%= link_to item_path(item) do %>
+            <div class='item-img-content'>
+              <%= image_tag item.image , class: "item-img" if item.image.attached? %>
+            </div>
+            <div class='item-info'>
+              <h3 class='item-name'>
+                <%= item.name %>
+              </h3>
+              <div class='item-price'>
+                <span><%= item.price %>円<br>
+                  <%= item.shipping_fee.name %></span>
+                <div class='view-counts'>
+                  <span class='count-print'>回覧数 : <%= item.view_counts.count %></span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
 <%= link_to(new_item_path, class: 'purchase-btn') do %>
   <span class='purchase-btn-text'>出品する</span>

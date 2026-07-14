@@ -12,7 +12,11 @@
       </div>
     </div>
     <div class="item-index-contents">
-      <h2 class='title'>ピックアップカテゴリー</h2>
+      <% if params[:category_id].blank? %>
+        <h2 class='title'>すべて</h2>
+      <% else %>
+        <h2 class='title'><%= @category.name %></h2>
+      <%end%>
       <div class="subtitle" >
         新規投稿商品
       </div>

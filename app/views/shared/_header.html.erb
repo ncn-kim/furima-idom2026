@@ -15,9 +15,9 @@
         <div class="all-item-nav-btn", id="all-item-nav-btn">
           <%= link_to "すべて", items_path %>
         </div>
-        <div class="category-nav">
+        <div class="category-nav", id="category-nav">
           <div class="category-nav-btn", id="category-nav-btn">カテゴリー</div>
-          <ul class="category-nav-list", id="category-nav-list>
+          <ul class="category-nav-list", id="category-nav-list">
             <% @categories.each do |c|%>
               <li>
                 <%= link_to c.name, items_path(category_id: c.id) %>
@@ -25,7 +25,7 @@
             <%end%>
           </ul>
         </div>
-        <div class="brand-nav">
+        <div class="brand-nav", id="brand-nav">
           <div class="brand-nav-btn" , id="brand-nav-btn">ブランド</div>
           <ul class="brand-nav-list", id="brand-nav-list">
             <% @brands.each do |b|%>
