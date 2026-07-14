@@ -7,6 +7,8 @@ class ItemsController < ApplicationController
   before_action :authorize_edit!, only: [:edit, :update]
   # destroy実行前に自分の商品か確認
   before_action :authorize_destroy!, only: [:destroy]
+  # 共有されるheaderのカテゴリを共通化
+  before_action :shared_header, only: [:index, :show]
 
   def destroy
     @item.destroy
@@ -28,18 +30,14 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-
-    current_user.view_counts.create(item_id: @item.id)
-
-    # @comment = Comment.new
-    # @comments = @item.comments.includes(:user)
+    ViewCount.create(item_id: @item.id, user_id: current_user&.id)
   end
 
   def index
     @items = Item.includes(:user).order(created_at: :desc)
-    @categories = Category.where.not(id: 1)
-    @brands = Brand.where.not(id: 1)
+    return unless params[:category_id].present?
 
+    @category = Category.find(params[:category_id])
     @items = @items.where(category_id: params[:category_id])
   end
 
@@ -59,12 +57,17 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :image, :detail, :price, :category_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
+    params.require(:item).permit(:name, :image, :detail, :price, :category_id, :brand_id, :sales_status_id, :shipping_fee_id, :prefecture_id,
                                  :schedule_id).merge(user_id: current_user.id)
   end
 
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def shared_header
+    @categories = Category.where.not(id: 1)
+    @brands = Brand.where.not(id: 1)
   end
 
   def authorize_edit!

@@ -49,7 +49,6 @@
   font-size: 18px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
   width: 100%;
   padding: 1vh 0;
 }
@@ -122,20 +121,25 @@
 }
 
 .category-nav-list {
-  position: relative;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   width: 300px;
   z-index: 10;
   background-color: #3ccace;
   text-align: center;
-  /* display: none; */
+  display: none;
 }
 
 .brand-nav-list {
-  position: relative;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   width: 300px;
   z-index: 10;
   text-align: center;
-  /* display: none; */
+  background-color: #3ccace;
+  display: none;
 }
 
 .category-nav-list a {

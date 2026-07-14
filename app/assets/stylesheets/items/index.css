@@ -217,7 +217,7 @@ a {
 .item-contents {
   background-color: #fff;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   padding: 10vh 0;
 }
 
@@ -249,6 +249,19 @@ a {
 }
 
 .item-lists > .list {
+  width: 37vh;
+  padding: 1vw;
+  background-color: #fff;
+}
+
+.top-item-lists {
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.top-item-lists > .list {
   width: 37vh;
   padding: 1vw;
   background-color: #fff;
@@ -311,9 +324,13 @@ a {
 
 .category-contents {
   width: auto;
+  height: 500px;
   position: sticky;
   white-space: nowrap;
   margin-left: 30px;
+  text-align: center;
+  top: 0;
+  z-index: 10;
 }
 
 .category-btn a {
