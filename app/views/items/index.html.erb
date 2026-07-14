@@ -22,6 +22,13 @@
       </div>
       <%= form_with url: items_path, method: :get, local: true do |f|%>
         <%= hidden_field_tag :category_id, params[:category_id] %>
+        <%= select_tag :status,options_for_select(
+          [
+            ['すべて', ''],
+            ['販売中', 'selling'],
+            ['売り切れ', 'sold']
+          ], params[:status]
+          ), onchange: 'this.form.submit();' %>
         <%= f.select :sort, [
           ['---', ''],
           ['回覧数高い順', 'view_count_desc'],
