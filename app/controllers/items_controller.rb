@@ -29,16 +29,15 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
     ViewCount.create(item_id: @item.id, user_id: current_user&.id)
   end
 
   def index
-    @items = Item.includes(:user).order(created_at: :desc)
-    return unless params[:category_id].present?
-
-    @category = Category.find(params[:category_id])
-    @items = @items.where(category_id: params[:category_id])
+    @items = Item.includes(:user)
+    filter_by_category
+    filter_by_brand
+    filter_by_status
+    sort_items
   end
 
   def new
@@ -67,7 +66,7 @@ class ItemsController < ApplicationController
 
   def shared_header
     @categories = Category.where.not(id: 1)
-    @brands = Brand.where.not(id: 1)
+    @brands = Brand.all
   end
 
   def authorize_edit!
@@ -84,5 +83,58 @@ class ItemsController < ApplicationController
   def authorize_destroy!
     # 自分の商品でない場合トップページに
     redirect_to root_path unless @item.owned_by?(current_user)
+  end
+
+  def filter_by_category
+    return unless params[:category_id].present?
+
+    @category = Category.find(params[:category_id])
+    @items = @items.where(category_id: params[:category_id])
+  end
+
+  def filter_by_brand
+    return unless params[:brand_id].present?
+
+    @brand = Brand.find(params[:brand_id])
+    @items = @items.where(brand_id: params[:brand_id])
+  end
+
+  def filter_by_status
+    return unless params[:status].present?
+
+    @items =
+      case params[:status]
+      when 'selling'
+        @items.left_joins(:order)
+              .where(orders: { id: nil })
+      when 'sold'
+        @items.joins(:order)
+      else
+        @items
+      end
+  end
+
+  def sort_items
+    @items =
+      case params[:sort]
+      when 'view_count_desc'
+        @items.left_joins(:view_counts)
+              .group(:id)
+              .order('COUNT(view_counts.id) DESC')
+
+      when 'view_count_asc'
+        @items.left_joins(:view_counts)
+              .group(:id)
+              .order('COUNT(view_counts.id) ASC')
+
+      when 'price_desc'
+        @items.order(price: :desc)
+
+      when 'price_asc'
+        @items.order(price: :asc)
+
+      else
+        @items.order(created_at: :desc)
+      end
   end
 end

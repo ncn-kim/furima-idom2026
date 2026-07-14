@@ -1,24 +1,49 @@
 <%= render "shared/header" %>
 <div class='main'>
   <div class='item-contents'>
-    <div class="category-contents">
-      <p>カテゴリーリスト</p>
-      <div class="category-btn">
-        <%= link_to "すべて", items_path %>
-        <% @categories.each do |c|%>
-          <% next if c.id == 1 %>
-          <%= link_to c.name, items_path(category_id: c.id)%>
-        <% end %>
-      </div>
-    </div>
     <div class="item-index-contents">
       <% if params[:category_id].blank? %>
         <h2 class='title'>すべて</h2>
       <% else %>
         <h2 class='title'><%= @category.name %></h2>
-      <%end%>
+      <% end %>
       <div class="subtitle" >
-        新規投稿商品
+        <% if params[:brand_id].blank? %>
+          すべてのブランド
+        <% else %>
+          <%= @brand.name %>
+        <% end %>
+      </div>
+      <div class="item-filter">
+        <%= form_with url: items_path, method: :get, local: true do |f| %>
+          <%= f.select :category_id,
+    [['すべて', '']] + @categories.map { |c| [c.name, c.id] },
+    { selected: params[:category_id] },
+    { onchange: 'this.form.submit();', class: 'filter-select' } %>
+          <%= f.select :brand_id,
+    [['すべてのブランド', '']] + @brands.map { |b| [b.name, b.id] },
+    { selected: params[:brand_id] },
+    { onchange: 'this.form.submit();', class: 'filter-select' } %>
+          <%= f.select :status,
+    [
+      ['すべて', ''],
+      ['販売中', 'selling'],
+      ['売り切れ', 'sold']
+    ],
+    { selected: params[:status] },
+    { onchange: 'this.form.submit();', class: 'filter-select' } %>
+          <%= f.select :sort,
+    [
+      ['---', ''],
+      ['回覧数高い順', 'view_count_desc'],
+      ['回覧数低い順', 'view_count_asc'],
+      ['値段高い順', 'price_desc'],
+      ['値段低い順', 'price_asc']
+    ],
+    { selected: params[:sort] },
+    { onchange: 'this.form.submit();', class: 'filter-select' } %>
+        <% end %>
+        <%= link_to '条件クリア', items_path, class: 'clear-btn' %>
       </div>
       <div class="item-main-contents">
         <ul class='item-lists'>
