@@ -325,12 +325,15 @@ a {
 .category-contents {
   width: auto;
   height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: sticky;
   white-space: nowrap;
-  margin-left: 30px;
   text-align: center;
   top: 0;
   z-index: 10;
+  margin-top: 8vh;
 }
 
 .category-btn a {
