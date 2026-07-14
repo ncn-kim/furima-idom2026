@@ -14,6 +14,15 @@ class Item < ApplicationRecord
 
   has_one_attached :image
 
+  def self.search(search)
+    if search == ''
+      Item.all
+    else
+      search = "%#{search}%"
+      Item.find_by_sql(['select * from items where name like ? ', search])
+    end
+  end
+
   # active_hash外のカラムバリデーション
   validates :name, presence: true, length: { maximum: 40 }
   validates :detail, presence: true, length: { maximum: 1000 }

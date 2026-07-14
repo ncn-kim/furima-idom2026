@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   # ログイン有無確認
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :search]
   # 商品情報取得
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   # ログイン中でも、売却済み+自身の商品以外ならトップページ
@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   # destroy実行前に自分の商品か確認
   before_action :authorize_destroy!, only: [:destroy]
   # 共有されるheaderのカテゴリを共通化
-  before_action :shared_header, only: [:index, :show]
+  before_action :shared_header, only: [:index, :show, :search]
 
   def destroy
     @item.destroy
@@ -51,6 +51,11 @@ class ItemsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def search
+    @items = Item.search(params[:keyword])
+    render :index
   end
 
   private
