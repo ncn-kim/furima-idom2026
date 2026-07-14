@@ -30,6 +30,10 @@ class ItemsController < ApplicationController
 
   def show
     ViewCount.create(item_id: @item.id, user_id: current_user&.id)
+    @comment = Comment.new
+    @comments = @item.comments.includes(:user)
+    @prev_item = Item.where('id < :id', id: @item.id).order(id: :desc).first
+    @next_item = Item.where('id > :id', id: @item.id).order(id: :asc).first
   end
 
   def index

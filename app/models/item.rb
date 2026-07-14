@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   belongs_to :brand
 
   belongs_to :user
-  # has_many :comments
+  has_many :comments, dependent: :destroy
   has_one :order, dependent: :destroy
   has_many :view_counts, dependent: :destroy
 
@@ -21,6 +21,10 @@ class Item < ApplicationRecord
       search = "%#{search}%"
       Item.find_by_sql(['select * from items where name like ? ', search])
     end
+  end
+
+  def owned_by?(user)
+    user_id == user&.id
   end
 
   # active_hash外のカラムバリデーション
