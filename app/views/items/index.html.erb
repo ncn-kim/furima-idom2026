@@ -17,16 +17,16 @@
       <div class="item-filter">
         <%= form_with url: items_path, method: :get, local: true do |f| %>
           <%= f.select :category_id,
-    [['すべて', '']] + @categories.map { |c| [c.name, c.id] },
+    [['Category', '']] + @categories.map { |c| [c.name, c.id] },
     { selected: params[:category_id] },
     { onchange: 'this.form.submit();', class: 'filter-select' } %>
           <%= f.select :brand_id,
-    [['すべてのブランド', '']] + @brands.map { |b| [b.name, b.id] },
+    [['Brand', '']] + @brands.map { |b| [b.name, b.id] },
     { selected: params[:brand_id] },
     { onchange: 'this.form.submit();', class: 'filter-select' } %>
           <%= f.select :status,
     [
-      ['すべて', ''],
+      ['Selling or Sold', ''],
       ['販売中', 'selling'],
       ['売り切れ', 'sold']
     ],
@@ -34,7 +34,7 @@
     { onchange: 'this.form.submit();', class: 'filter-select' } %>
           <%= f.select :sort,
     [
-      ['---', ''],
+      ['Sort', ''],
       ['回覧数高い順', 'view_count_desc'],
       ['回覧数低い順', 'view_count_asc'],
       ['値段高い順', 'price_desc'],
