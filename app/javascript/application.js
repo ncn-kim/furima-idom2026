@@ -4,3 +4,4 @@ import "controllers";
 import "card";
 import "item_price";
 import "header_pulldown";
+import "view_count";

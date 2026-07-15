@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
   # ログイン有無確認
-  before_action :authenticate_user!, except: [:index, :show, :search]
+  before_action :authenticate_user!, except: [:index, :show, :search, :increment_view_count]
   # 商品情報取得
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :increment_view_count]
   # ログイン中でも、売却済み+自身の商品以外ならトップページ
   before_action :authorize_edit!, only: [:edit, :update]
   # destroy実行前に自分の商品か確認
@@ -29,11 +29,15 @@ class ItemsController < ApplicationController
   end
 
   def show
-    ViewCount.create(item_id: @item.id, user_id: current_user&.id)
     @comment = Comment.new
     @comments = @item.comments.includes(:user)
     @prev_item = Item.where('id < :id', id: @item.id).order(id: :desc).first
     @next_item = Item.where('id > :id', id: @item.id).order(id: :asc).first
+  end
+
+  def increment_view_count
+    ViewCount.create(item_id: @item.id, user_id: current_user.id) if user_signed_in? && current_user != @item.user
+    head :ok
   end
 
   def index
