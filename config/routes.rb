@@ -7,6 +7,9 @@ Rails.application.routes.draw do
         collection do
                     get 'search'
         end
+        member do
+                    post 'increment_view_count'
+        end
   end
   resources :users, only: :show
 end
