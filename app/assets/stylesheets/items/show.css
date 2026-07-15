@@ -98,6 +98,11 @@
   font-size: 14px;
 }
 
+.detail-value > a {
+  color: black;
+  text-decoration: none;
+}
+
 .option {
   display: flex;
   justify-content: space-between;

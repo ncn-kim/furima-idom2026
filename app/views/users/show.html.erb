@@ -1,10 +1,10 @@
 <%= render "shared/header" %>
 <div class="user-page">
-  <div class="user-page-title">
-    <%= "#{@user.nickname}様の情報" %>
-  </div>
-  <div class="user-info">
-    <% if user_signed_in? && current_user == @user %>
+  <% if user_signed_in? && current_user == @user %>
+    <div class="user-page-title">
+      <%= "#{@user.nickname}様の情報" %>
+    </div>
+    <div class="user-info">
       <dl class="user-personal-info">
         <div class="info-row">
           <dt>ニックネーム</dt>
@@ -35,39 +35,39 @@
           <dd><%= @user.birth_date.strftime("%Y年%-m月%-d日") %></dd>
         </div>
       </dl>
-    <% end %>
-    <dl class="user-active-info">
-      <div class="info-row">
-        <dt>会員登録日</dt>
-        <dd><%= @user.created_at.strftime("%Y年%m月%d日") %></dd>
-      </div>
-      <div class="info-row">
-        <dt>出品商品数</dt>
-        <dd><%= "#{@user.items.count}個" %></dd>
-      </div>
-      <div class="info-row">
-        <dt>回覧数合計</dt>
-        <dd><%= "#{ViewCount.where(item_id: @user.item_ids).count}回" %></dd>
-      </div>
-      <div class="info-row">
-        <dt>販売済み商品数</dt>
-        <dd><%= "#{@user.items.joins(:order).count}個" %></dd>
-      </div>
-      <div class="info-row">
-        <dt>販売合計金額</dt>
-        <dd><%= "#{@user.items.joins(:order).sum(:price)}円" %></dd>
-      </div>
-      <div class="info-row">
-        <dt>購入済み商品数</dt>
-        <dd><%= "#{@user.orders.count}個" %></dd>
-      </div>
-      <div class="info-row">
-        <dt>購入合計金額</dt>
-        <dd><%= "#{@user.orders.joins(:item).sum('items.price')}円" %></dd>
-      </div>
-    </dl>
+      <dl class="user-active-info">
+        <div class="info-row">
+          <dt>会員登録日</dt>
+          <dd><%= @user.created_at.strftime("%Y年%m月%d日") %></dd>
+        </div>
+        <div class="info-row">
+          <dt>出品商品数</dt>
+          <dd><%= "#{@user.items.count}個" %></dd>
+        </div>
+        <div class="info-row">
+          <dt>回覧数合計</dt>
+          <dd><%= "#{ViewCount.where(item_id: @user.item_ids).count}回" %></dd>
+        </div>
+        <div class="info-row">
+          <dt>販売済み商品数</dt>
+          <dd><%= "#{@user.items.joins(:order).count}個" %></dd>
+        </div>
+        <div class="info-row">
+          <dt>販売合計金額</dt>
+          <dd><%= "#{@user.items.joins(:order).sum(:price)}円" %></dd>
+        </div>
+        <div class="info-row">
+          <dt>購入済み商品数</dt>
+          <dd><%= "#{@user.orders.count}個" %></dd>
+        </div>
+        <div class="info-row">
+          <dt>購入合計金額</dt>
+          <dd><%= "#{@user.orders.joins(:item).sum('items.price')}円" %></dd>
+        </div>
+      </dl>
+    </div>
   </div>
-</div>
+<% end %>
 <div class="user-page-title">
   <%= "#{@user.nickname}様の出品商品"%>
 </div>
